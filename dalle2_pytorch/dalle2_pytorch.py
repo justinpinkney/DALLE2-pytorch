@@ -903,7 +903,7 @@ class DiffusionPrior(BaseGaussianDiffusion):
         return model_mean + nonzero_mask * (0.5 * model_log_variance).exp() * noise
 
     @torch.inference_mode()
-    def p_sample_loop(self, shape, text_cond):
+    def p_sample_loop(self, shape, text_cond, **kwargs):
         device = self.betas.device
 
         b = shape[0]
@@ -914,7 +914,7 @@ class DiffusionPrior(BaseGaussianDiffusion):
 
         for i in tqdm(reversed(range(0, self.num_timesteps)), desc='sampling loop time step', total=self.num_timesteps):
             times = torch.full((b,), i, device = device, dtype = torch.long)
-            image_embed = self.p_sample(image_embed, times, text_cond = text_cond)
+            image_embed = self.p_sample(image_embed, times, text_cond = text_cond, **kwargs)
 
         return image_embed
 
