@@ -116,6 +116,7 @@ if __name__ == "__main__":
     wandb.init(
         project="clip2latent",
         config=cfg,
+        entity="justinpinkney",
     )
     # Load model
     device = cfg["device"]
